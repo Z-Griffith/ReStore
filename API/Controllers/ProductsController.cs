@@ -10,7 +10,7 @@ namespace API.Controllers
     public class ProductsController : ControllerBase
     {
         // ctor - create a Constructor
-        // in oder to use the dependency injection, we create a private field
+        // In oder to use the dependency injection, we create a private field
        
         private readonly StoreContext _context;
 

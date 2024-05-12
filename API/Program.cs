@@ -15,8 +15,7 @@ builder.Services.AddDbContext<StoreContext>(opt =>
 {
     opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-
-
+builder.Services.AddCors();
 
 
 var app = builder.Build();
@@ -30,17 +29,24 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// Configure Cross-Origin Resource Sharing (CORS) middleware 
+app.UseCors(opt =>
+{
+    opt.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
+});
 
-app.UseRouting();
+// app.UseHttpsRedirection();
 
-app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers(); // Map controllers
-            });
+// app.UseRouting();
 
+app.UseAuthorization();
 
+// app.UseEndpoints(endpoints =>
+//             {
+//                 endpoints.MapControllers(); // Map controllers
+//             });
 
+app.MapControllers();
 
 // Creating Dependency Injection Scope - creates a new scope within which services can be resolved
 var scope = app.Services.CreateScope();

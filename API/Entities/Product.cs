@@ -22,7 +22,7 @@ namespace API.Entities
             public int Id { get; set; }
             public string Name { get; set; }
             public string Description {get; set; }
-            public long Price { get; set; } // a hundred will be stored as 10000 for adding decimal in the UI
+            public long Price { get; set; } // A hundred will be stored as 10000 for adding decimal in the UI
             public string PictureUrl { get; set; }
             public string Type { get; set; }
             public string Brand { get; set; }

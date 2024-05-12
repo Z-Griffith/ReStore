@@ -3,7 +3,7 @@ using API.Entities;
 namespace API.Data
 {
 
-    // static means we can use it without actually initializing a new instance of this particular class
+    // Static means we can use it without actually initializing a new instance of this particular class
     public static class DbInitializer
     {
         public static void  Initialize(StoreContext context)
@@ -12,7 +12,7 @@ namespace API.Data
 
             var products = new List<Product>
             {
-                // create snippets - copy and paste from D:\C Relocation\Downloads\files\01 - Introduction\003 courseAssets\courseAssets\snippets
+                // Create snippets - copy and paste from D:\C Relocation\Downloads\files\01 - Introduction\003 courseAssets\courseAssets\snippets
                 new Product
                 {
                     Name = "Angular Speedster Board 2000",
@@ -211,7 +211,7 @@ namespace API.Data
                 },
             };
 
-            context.Products.AddRange(products); // it is more concise
+            context.Products.AddRange(products); // It is more concise
 
             // foreach (var product in products)
             // {
