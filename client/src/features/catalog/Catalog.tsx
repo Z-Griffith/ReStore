@@ -1,4 +1,6 @@
+import { Button  } from "@mui/material";
 import { Product } from "../../app/models/product"
+import ProductList from "./ProductList";
 
 interface Props {
     products: Product[]
@@ -12,14 +14,10 @@ export default function Catalog({products, addProduct}: Props) {
     return (
         // No output is needed here then use <Fragment> and a shorthand of it is <>
         <> 
-            <ul>
-                {products.map(product => (
-                    <li key={product.id}>{product.name} - {product.price}</li>
-                ))}
-            </ul>
+            <ProductList products={products} />
             {/* Do not need to add parentheses */}
-            <button onClick={addProduct}>Add product</button>
-        </>
+            <Button variant='contained' onClick={addProduct}>Add product</Button>
+        </> 
 
     )
 }
