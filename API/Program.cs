@@ -1,6 +1,7 @@
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Builder;
+using API.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,7 +23,11 @@ var app = builder.Build();
 
 // Middleware: the odrder is always important inside here
 
+
 // Configure the HTTP request pipeline.
+// app.UseDeveloperExceptionPage();
+app.UseMiddleware<ExceptionMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -32,21 +37,27 @@ if (app.Environment.IsDevelopment())
 // Configure Cross-Origin Resource Sharing (CORS) middleware 
 app.UseCors(opt =>
 {
-    opt.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
+    opt.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://170.64.205.145:3000");
 });
 
 // app.UseHttpsRedirection();
 
-// app.UseRouting();
+
+
+
+
+app.UseRouting();
 
 app.UseAuthorization();
 
-// app.UseEndpoints(endpoints =>
-//             {
-//                 endpoints.MapControllers(); // Map controllers
-//             });
+        // other middleware configurations
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllers(); // or MapRazorPages() if using Razor Pages
+        });
 
-app.MapControllers();
+
+// app.MapControllers();
 
 // Creating Dependency Injection Scope - creates a new scope within which services can be resolved
 var scope = app.Services.CreateScope();
@@ -69,13 +80,3 @@ catch (Exception ex)
 
 app.Run();
 
-
-
-
-
-
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

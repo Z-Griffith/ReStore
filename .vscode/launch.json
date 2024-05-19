@@ -30,6 +30,18 @@
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach"
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch Chrome against 170.64.205.145",
+            "url": "http://170.64.205.145:3000",
+            "webRoot": "${workspaceFolder}/src",
+            "sourceMaps": true,
+            "trace": true,
+            "pathMapping": {
+                "/": "${workspaceFolder}/src"}
+            
         }
     ]
 }
