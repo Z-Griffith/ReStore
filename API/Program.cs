@@ -37,7 +37,7 @@ if (app.Environment.IsDevelopment())
 // Configure Cross-Origin Resource Sharing (CORS) middleware 
 app.UseCors(opt =>
 {
-    opt.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://170.64.205.145:3000");
+    opt.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://170.64.205.145:3000");
 });
 
 // app.UseHttpsRedirection();
@@ -46,18 +46,18 @@ app.UseCors(opt =>
 
 
 
-app.UseRouting();
+// app.UseRouting();
 
 app.UseAuthorization();
 
         // other middleware configurations
-        app.UseEndpoints(endpoints =>
-        {
-            endpoints.MapControllers(); // or MapRazorPages() if using Razor Pages
-        });
+// app.UseEndpoints(endpoints =>
+//         {
+//             endpoints.MapControllers(); // or MapRazorPages() if using Razor Pages
+//         });
 
 
-// app.MapControllers();
+app.MapControllers();
 
 // Creating Dependency Injection Scope - creates a new scope within which services can be resolved
 var scope = app.Services.CreateScope();

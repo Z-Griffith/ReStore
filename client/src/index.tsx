@@ -6,14 +6,18 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './app/router/Routes';
+import React from 'react';
+import { StoreProvider } from './app/context/StoreContext';
 
 
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  // <React.StrictMode>
-    <RouterProvider router={router} />
-  // </React.StrictMode> // Only in Dev not Production
+  <React.StrictMode>
+    <StoreProvider>
+      <RouterProvider router={router} />
+    </StoreProvider>   
+  </React.StrictMode> // Only in Dev not Production
   // Two requests will be made when we get a resource in the React StrictMode 
   // It helps to detect any problems with out code and warn us about them
 )
