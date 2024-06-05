@@ -7,17 +7,44 @@ import '@fontsource/roboto/700.css';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './app/router/Routes';
 import React from 'react';
-import { StoreProvider } from './app/context/StoreContext';
+import { Provider } from 'react-redux';
+import { store } from './app/store/configureStore';
 
 
 
+// const store = configureStore();
+// console.log(store.getState());
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement
+);
+
+// store.dispatch(fetchProductsAsync());
+
+root.render(
   <React.StrictMode>
-    <StoreProvider>
+    {/* <StoreProvider> */}
+      <Provider store={store}>
       <RouterProvider router={router} />
-    </StoreProvider>   
+      </Provider>
+    {/* </StoreProvider>    */}
   </React.StrictMode> // Only in Dev not Production
   // Two requests will be made when we get a resource in the React StrictMode 
   // It helps to detect any problems with out code and warn us about them
 )
+
+
+// export const history = createBrowserHistory();
+
+// ReactDOM.render(
+//   <React.StrictMode>
+//     <StoreProvider>
+//       <Provider store={store}>
+//       <RouterProvider router={router} />
+//       </Provider>
+//     </StoreProvider>   
+//   </React.StrictMode>,
+//   document.getElementById('root')
+//   )
+
+// reportWebVitals();

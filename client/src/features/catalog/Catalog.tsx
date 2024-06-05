@@ -1,16 +1,19 @@
-import { Product } from "../../app/models/product"
-import agent from "../../app/api/agent"
 import ProductList from "./ProductList";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import LoadingComponent from "../../app/layout/LoadingComponent";
+import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
+import { fetchProductsAsync, productSelectors } from "./catalogSlice";
 
 // export default function Catalog(props: Props) {
 // destructuring from the object 
 export default function Catalog() {
 
     // React hook
-    const [products, setProducts] = useState<Product[]>([]);
-    const [loading, setLoading] = useState(true);
+    // const [products, setProducts] = useState<Product[]>([]);
+    const products = useAppSelector(productSelectors.selectAll);
+    const { productsLoaded, status } = useAppSelector(state => state.catalog);
+    const dispatch = useAppDispatch();
+    // const [loading, setLoading] = useState(true);
 
 
     // useEffect(() => {
@@ -20,15 +23,16 @@ export default function Catalog() {
     // }, []); // Put a dependancy of empty array and it means to this can only be called once
 
     useEffect(() => {
+        if (!productsLoaded) dispatch(fetchProductsAsync());
         // if (loading) return; // React Hook useEffect has a missing dependency: 'loading'. Either include it or remove the dependency array.
-        agent.Catalog.list()
-            .then(products => setProducts(products))
-            .catch(error => console.log(error))
-            .finally(() => setLoading(false))
+        // agent.Catalog.list()
+        //     .then(products => setProducts(products))
+        //     .catch(error => console.log(error))
+        //     .finally(() => setLoading(false))
 
-    }, []) 
+    }, [productsLoaded, dispatch]) 
 
-    if (loading) return <LoadingComponent message="Loading products..." />
+    if (status.includes('pending')) return <LoadingComponent message="Loading products..." />
 
     // function addProduct() {
     //     // Add Function or a syntax called a spread operator
