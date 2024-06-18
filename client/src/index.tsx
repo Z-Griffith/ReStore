@@ -22,13 +22,16 @@ const root = ReactDOM.createRoot(
 // store.dispatch(fetchProductsAsync());
 
 root.render(
-  <React.StrictMode>
-    {/* <StoreProvider> */}
-      <Provider store={store}>
-      <RouterProvider router={router} />
-      </Provider>
-    {/* </StoreProvider>    */}
-  </React.StrictMode> // Only in Dev not Production
+  <Provider store={store}>
+  <RouterProvider router={router} />
+  </Provider>
+  // <React.StrictMode>
+  //   {/* <StoreProvider> */}
+  //     <Provider store={store}>
+  //     <RouterProvider router={router} />
+  //     </Provider>
+  //   {/* </StoreProvider>    */}
+  // </React.StrictMode> // Only in Dev not Production
   // Two requests will be made when we get a resource in the React StrictMode 
   // It helps to detect any problems with out code and warn us about them
 )

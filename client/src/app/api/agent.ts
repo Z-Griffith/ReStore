@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosResponse} from "axios";
 import { toast } from "react-toastify";
 import { router } from "../router/Routes";
+import { PaginatedResponse } from "../models/pagination";
 
 const sleep = () => new Promise(resolve => setTimeout(resolve, 500));
 
@@ -16,6 +17,13 @@ const responseBody = (response: AxiosResponse) => response.data; // use arrow fu
 
 axios.interceptors.response.use(async response => {
     await sleep();
+    // console.log(response);
+    const pagination = response.headers['pagination']; // axios only works with lower case 
+    if (pagination) {
+        response.data = new PaginatedResponse(response.data, JSON.parse(pagination));
+        console.log(response);
+        return response;
+    }
     return response
 }, (error: AxiosError) => {
     // The destructuring assignment { data, status } = error.response extracts the data and status properties from error.response into separate variables data and status.
@@ -51,15 +59,16 @@ axios.interceptors.response.use(async response => {
 })
 
 const requests = {
-    get: (url: string) => axios.get(url).then(responseBody),
+    get: (url: string, params?: URLSearchParams) => axios.get(url, {params}).then(responseBody),
     post: (url: string, body: object) => axios.post(url, body).then(responseBody),
     put: (url: string, body: object) => axios.put(url, body).then(responseBody),
     delete: (url: string) => axios.delete(url).then(responseBody)
 }
 
 const Catalog = {
-    list: () => requests.get('products'),
-    details: (id: number) => requests.get(`products/${id}`)
+    list: (params: URLSearchParams) => requests.get('products', params),
+    details: (id: number) => requests.get(`products/${id}`),
+    fetchFilters: () => requests.get(`products/filters`)
 }
 
 const TestErrors = {
